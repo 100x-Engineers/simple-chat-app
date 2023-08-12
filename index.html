@@ -1,0 +1,45 @@
+<!doctype html>
+<html>
+  <head>
+    <title>Socket.io Chat</title>
+    <style>
+      /* Add some simple styling for our chat */
+      ul {
+        list-style-type: none;
+        margin: 0;
+        padding: 0;
+      }
+      li {
+        margin-bottom: 10px;
+        padding-bottom: 5px;
+        border-bottom: 1px dotted #ddd;
+      }
+      #messages {
+        height: 300px;
+        overflow: auto;
+      }
+    </style>
+  </head>
+  <body>
+    <ul id="messages"></ul>
+    <form id="form" action="">
+      <input id="input" autocomplete="off" /><button>Send</button>
+    </form>
+    <script src="/socket.io/socket.io.js"></script>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script>
+      $(function () {
+        const socket = io();
+        $('form').submit(function() {
+          socket.emit('chat message', $('#input').val());
+          $('#input').val('');
+          return false;
+        });
+        socket.on('chat message', function(msg){
+          $('#messages').append($('<li>').text(msg));
+        });
+      });
+    </script>
+  </body>
+</html>
+
