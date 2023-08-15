@@ -5,6 +5,7 @@ const socketIo = require('socket.io');
 const app = express();
 const server = http.createServer(app);
 const io = socketIo(server);
+let onlineUsers = [];
 
 app.get('/', (req, res) => {
     res.sendFile(__dirname + '/index.html');
@@ -12,8 +13,21 @@ app.get('/', (req, res) => {
 
 io.on('connection', (socket) => {
     console.log('a user connected');
+
+    socket.on('user joined', (username) => {
+        if (onlineUsers.indexOf(username) === -1) {
+            onlineUsers.push(username);
+            socket.username = username;
+            io.emit('update userlist', onlineUsers);
+        }
+    });
+
     socket.on('disconnect', () => {
         console.log('user disconnected');
+        if (socket.username) {
+            onlineUsers = onlineUsers.filter(user => user !== socket.username);
+            io.emit('update userlist', onlineUsers);
+        }
     });
     socket.on('chat message', (msg) => {
         io.emit('chat message', msg);
