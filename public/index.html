@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>100x Chat</title>
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body>
+    <div class="chat-app">
+      <aside class="sidebar">
+        <header class="sidebar-header">
+          <h2>Online Users</h2>
+        </header>
+        <ul class="contact-list">
+          <!-- Users will be populated here -->
+        </ul>
+      </aside>
+      <section class="chat-area">
+        <header class="chat-header">
+          <h2>100x Chat</h2>
+        </header>
+        <div class="messages">
+          <div class="message received">Hello there!</div>
+          <div class="message sent">Hi, how are you?</div>
+          <!-- Messages will be populated here -->
+        </div>
+        <div class="message-input">
+          <input
+            type="text"
+            id="messageInput"
+            placeholder="Type a message..."
+          />
+          <button id="sendButton">Send</button>
+        </div>
+      </section>
+    </div>
+    <script src="/socket.io/socket.io.js"></script>
+    <script src="script.js"></script>
+  </body>
+</html>

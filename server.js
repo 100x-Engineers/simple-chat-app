@@ -7,9 +7,7 @@ const server = http.createServer(app);
 const io = socketIo(server);
 let onlineUsers = [];
 
-app.get('/', (req, res) => {
-    res.sendFile(__dirname + '/index.html');
-});
+app.use(express.static(__dirname + "/public"));
 
 io.on('connection', (socket) => {
     console.log('a user connected');
