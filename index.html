@@ -115,7 +115,8 @@
     <div class="chat-app">
       <aside class="sidebar">
         <header class="sidebar-header">
-          <h2>Your Name</h2>
+          <h2>Online Users</h2>
+          <!-- Users will be populated here -->
         </header>
         <ul class="contact-list">
           <li class="contact">
@@ -126,12 +127,12 @@
       </aside>
       <section class="chat-area">
         <header class="chat-header">
-          <h2>John Doe</h2>
+          <h2>100x Chat</h2>
         </header>
         <div class="messages">
           <div class="message received">Hello there!</div>
           <div class="message sent">Hi, how are you?</div>
-          <!-- Add more messages as needed -->
+          <!-- Messages will be populated here -->
         </div>
         <div class="message-input">
           <input
@@ -183,7 +184,7 @@
       socket.on("chat message", (msg) => {
         const messagesDiv = document.querySelector(".messages");
         const newMessageDiv = document.createElement("div");
-        newMessageDiv.className = "message received"; // You might want to differentiate between sent and received messages.
+        newMessageDiv.className = "message received"; // Change this to differentiate between sent and received messages.
         newMessageDiv.textContent = msg;
         messagesDiv.appendChild(newMessageDiv);
         messagesDiv.scrollTop = messagesDiv.scrollHeight; // Scroll to the bottom to see the latest message
