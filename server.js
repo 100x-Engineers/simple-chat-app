@@ -8,6 +8,7 @@ const io = socketIo(server);
 let onlineUsers = [];
 
 app.use(express.static(__dirname + "/public"));
+
 io.on('connection', (socket) => {
     console.log('a user connected');
 
