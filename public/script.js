@@ -37,7 +37,28 @@ const handleSlashCommand = (message) => {
 
 const sendMessage = () => {
     const messageInput = document.getElementById("messageInput");
-    const message = messageInput.value;
+    let message = messageInput.value;
+
+    const replacements = {
+        react: "⚛",
+        woah: "😮",
+        hey: "👋",
+        lol: "😂",
+        like: "❤️",
+        congratulations: "🎉",
+    };
+
+    // hey world => ["hey","world"]
+    // Split message into words and replace
+    let words = message.split(" ");
+    for (let i = 0; i < words.length; i++) {
+        if (replacements[words[i]]) {
+            words[i] = replacements[words[i]];
+        }
+    }
+
+    message = words.join(" ");
+
     if (message.trim() !== "") {
         if (isSlashCommand(message)) {
             handleSlashCommand(message);
