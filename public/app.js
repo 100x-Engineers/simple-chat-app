@@ -1,10 +1,49 @@
 const socket = io();
 let username;
+
+const isSlashCommand = (message) => {
+    return message.startsWith("/");
+};
+
+const handleSlashCommand = (message) => {
+    const [command, ..._] = message.split(" ");
+    switch (command) {
+        case "/help":
+            alert(
+                "Available commands:\n" +
+                "/help - Show this message\n" +
+                "/random - Print a random number\n" +
+                "/clear - Clear the chat"
+            );
+            break;
+        case "/random":
+            const rNum = Math.random()
+            const newRandomNumDiv = document.createElement("div");
+            newRandomNumDiv.className = "quote received";
+            newRandomNumDiv.textContent = "Here's your random number: " + rNum;
+            appendChatMessage(newRandomNumDiv);
+            break;
+        case "/clear":
+            const messagesDiv = document.querySelector(".messages");
+            messagesDiv.innerHTML = "";
+            break;
+        default:
+            alert("Unknown command: " + command);
+            break;
+    }
+    return true;
+
+};
+
 const sendMessage = () => {
     const messageInput = document.getElementById("messageInput");
     const message = messageInput.value;
     if (message.trim() !== "") {
-        socket.emit("chat message", message);
+        if (isSlashCommand(message)) {
+            handleSlashCommand(message);
+        } else {
+            socket.emit("chat message", message);
+        }
         messageInput.value = "";
     }
 };
@@ -39,11 +78,15 @@ document.getElementById("messageInput").addEventListener("keyup", (event) => {
     }
 });
 
-socket.on("chat message", (msg) => {
+const appendChatMessage = (messageNode) => {
     const messagesDiv = document.querySelector(".messages");
+    messagesDiv.appendChild(messageNode);
+    messagesDiv.scrollTop = messagesDiv.scrollHeight; // Scroll to the bottom to see the latest message
+};
+
+socket.on("chat message", (msg) => {
     const newMessageDiv = document.createElement("div");
     newMessageDiv.className = "message received"; // You might want to differentiate between sent and received messages.
     newMessageDiv.textContent = msg;
-    messagesDiv.appendChild(newMessageDiv);
-    messagesDiv.scrollTop = messagesDiv.scrollHeight; // Scroll to the bottom to see the latest message
+    appendChatMessage(newMessageDiv);
 });
