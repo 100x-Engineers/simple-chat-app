@@ -18,4 +18,17 @@ ChatGPT puts everything together in a single file. We need to separate the code 
 2. Crate a `public` folder and put all these files there. 
 3. In `server.js`, use `express.static` module for `/public` folder. (Line number 10)
 
+## Emoji search
 
+Replace the following words with emojis:
+
+```json
+{
+  "react": "⚛️",
+  "woah": "😮",
+  "hey": "👋",
+  "lol": "😂",
+  "like": "❤️",
+  "congratulations": "🎉"
+}
+```
